@@ -3,7 +3,7 @@
 	archiveVersion = 1;
 	classes = {
 	};
-	objectVersion = 50;
+	objectVersion = 51;
 	objects = {
 
 /* Begin PBXBuildFile section */
@@ -15,6 +15,8 @@
 		FAC64FFA25DEF9520088E2F9 /* SportsApp.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = FAC64FF825DEF9520088E2F9 /* SportsApp.xcdatamodeld */; };
 		FAC64FFC25DEF9530088E2F9 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = FAC64FFB25DEF9530088E2F9 /* Assets.xcassets */; };
 		FAC64FFF25DEF9530088E2F9 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = FAC64FFD25DEF9530088E2F9 /* LaunchScreen.storyboard */; };
+		FAC6500A25DF033A0088E2F9 /* Second.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = FAC6500925DF033A0088E2F9 /* Second.storyboard */; };
+		FAC6500C25DF03FC0088E2F9 /* SecondViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = FAC6500B25DF03FC0088E2F9 /* SecondViewController.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -30,6 +32,8 @@
 		FAC64FFB25DEF9530088E2F9 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		FAC64FFE25DEF9530088E2F9 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		FAC6500025DEF9530088E2F9 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		FAC6500925DF033A0088E2F9 /* Second.storyboard */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; path = Second.storyboard; sourceTree = "<group>"; };
+		FAC6500B25DF03FC0088E2F9 /* SecondViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SecondViewController.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -50,7 +54,6 @@
 				BB68B0C9ED8F0A6BE7AC8F28 /* Pods-SportsApp.debug.xcconfig */,
 				01C9768D3B11AE283641E57D /* Pods-SportsApp.release.xcconfig */,
 			);
-			name = Pods;
 			path = Pods;
 			sourceTree = "<group>";
 		};
@@ -87,6 +90,8 @@
 				FAC64FF125DEF9520088E2F9 /* SceneDelegate.swift */,
 				FAC64FF325DEF9520088E2F9 /* ViewController.swift */,
 				FAC64FF525DEF9520088E2F9 /* Main.storyboard */,
+				FAC6500925DF033A0088E2F9 /* Second.storyboard */,
+				FAC6500B25DF03FC0088E2F9 /* SecondViewController.swift */,
 				FAC64FFB25DEF9530088E2F9 /* Assets.xcassets */,
 				FAC64FFD25DEF9530088E2F9 /* LaunchScreen.storyboard */,
 				FAC6500025DEF9530088E2F9 /* Info.plist */,
@@ -155,6 +160,7 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				FAC6500A25DF033A0088E2F9 /* Second.storyboard in Resources */,
 				FAC64FFF25DEF9530088E2F9 /* LaunchScreen.storyboard in Resources */,
 				FAC64FFC25DEF9530088E2F9 /* Assets.xcassets in Resources */,
 				FAC64FF725DEF9520088E2F9 /* Main.storyboard in Resources */,
@@ -213,6 +219,7 @@
 				FAC64FF425DEF9520088E2F9 /* ViewController.swift in Sources */,
 				FAC64FF025DEF9520088E2F9 /* AppDelegate.swift in Sources */,
 				FAC64FFA25DEF9520088E2F9 /* SportsApp.xcdatamodeld in Sources */,
+				FAC6500C25DF03FC0088E2F9 /* SecondViewController.swift in Sources */,
 				FAC64FF225DEF9520088E2F9 /* SceneDelegate.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

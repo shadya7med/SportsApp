@@ -20,7 +20,7 @@
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                 <state key="normal" title="Button"/>
                                 <connections>
-                                    <segue destination="iKA-Bh-g5v" kind="presentation" id="PUK-h7-sAR"/>
+                                    <segue destination="Apr-p8-rtX" kind="show" id="zxT-3I-vRd"/>
                                 </connections>
                             </button>
                         </subviews>
@@ -30,15 +30,21 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="dkx-z0-nzr" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="131.8840579710145" y="137.94642857142856"/>
+            <point key="canvasLocation" x="133" y="138"/>
         </scene>
-        <!--Second-->
-        <scene sceneID="byz-AY-Drf">
+        <!--View Controller-->
+        <scene sceneID="Obb-42-aWl">
             <objects>
-                <viewControllerPlaceholder storyboardName="Second" id="iKA-Bh-g5v" sceneMemberID="viewController">
-                    <navigationItem key="navigationItem" id="6yv-AK-1tU"/>
-                </viewControllerPlaceholder>
-                <placeholder placeholderIdentifier="IBFirstResponder" id="dZT-sj-3Kr" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
+                <viewController id="Apr-p8-rtX" sceneMemberID="viewController">
+                    <view key="view" contentMode="scaleToFill" id="dS8-6D-X0S">
+                        <rect key="frame" x="0.0" y="0.0" width="414" height="842"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <color key="backgroundColor" systemColor="systemBackgroundColor" cocoaTouchSystemColor="whiteColor"/>
+                        <viewLayoutGuide key="safeArea" id="fIX-qe-d62"/>
+                    </view>
+                    <navigationItem key="navigationItem" id="AZK-Zc-WDH"/>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="tzs-BL-qE9" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
             </objects>
             <point key="canvasLocation" x="1175" y="127"/>
         </scene>
