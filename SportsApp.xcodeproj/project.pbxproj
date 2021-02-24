@@ -7,6 +7,9 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		62895C6425E5DE1600D285B2 /* RoundImageView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 62895C6325E5DE1600D285B2 /* RoundImageView.swift */; };
+		62895C6625E5E03700D285B2 /* CCollectionViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 62895C6525E5E03700D285B2 /* CCollectionViewController.swift */; };
+		62895C6825E5E2E200D285B2 /* UpComingEventCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 62895C6725E5E2E200D285B2 /* UpComingEventCell.swift */; };
 		7B0CE3E5A595AF88B902B134 /* Pods_SportsApp.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 6A619E154668D218D04E653B /* Pods_SportsApp.framework */; };
 		FAC64FF025DEF9520088E2F9 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = FAC64FEF25DEF9520088E2F9 /* AppDelegate.swift */; };
 		FAC64FF225DEF9520088E2F9 /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = FAC64FF125DEF9520088E2F9 /* SceneDelegate.swift */; };
@@ -21,6 +24,9 @@
 
 /* Begin PBXFileReference section */
 		01C9768D3B11AE283641E57D /* Pods-SportsApp.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-SportsApp.release.xcconfig"; path = "Target Support Files/Pods-SportsApp/Pods-SportsApp.release.xcconfig"; sourceTree = "<group>"; };
+		62895C6325E5DE1600D285B2 /* RoundImageView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RoundImageView.swift; sourceTree = "<group>"; };
+		62895C6525E5E03700D285B2 /* CCollectionViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CCollectionViewController.swift; sourceTree = "<group>"; };
+		62895C6725E5E2E200D285B2 /* UpComingEventCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UpComingEventCell.swift; sourceTree = "<group>"; };
 		6A619E154668D218D04E653B /* Pods_SportsApp.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_SportsApp.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		BB68B0C9ED8F0A6BE7AC8F28 /* Pods-SportsApp.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-SportsApp.debug.xcconfig"; path = "Target Support Files/Pods-SportsApp/Pods-SportsApp.debug.xcconfig"; sourceTree = "<group>"; };
 		FAC64FEC25DEF9520088E2F9 /* SportsApp.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = SportsApp.app; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -65,6 +71,22 @@
 			name = Frameworks;
 			sourceTree = "<group>";
 		};
+		62895C6125E5DDE900D285B2 /* Cells */ = {
+			isa = PBXGroup;
+			children = (
+				62895C6725E5E2E200D285B2 /* UpComingEventCell.swift */,
+			);
+			path = Cells;
+			sourceTree = "<group>";
+		};
+		62895C6225E5DDF200D285B2 /* CustomViews */ = {
+			isa = PBXGroup;
+			children = (
+				62895C6325E5DE1600D285B2 /* RoundImageView.swift */,
+			);
+			path = CustomViews;
+			sourceTree = "<group>";
+		};
 		FAC64FE325DEF9520088E2F9 = {
 			isa = PBXGroup;
 			children = (
@@ -86,6 +108,8 @@
 		FAC64FEE25DEF9520088E2F9 /* SportsApp */ = {
 			isa = PBXGroup;
 			children = (
+				62895C6225E5DDF200D285B2 /* CustomViews */,
+				62895C6125E5DDE900D285B2 /* Cells */,
 				FAC64FEF25DEF9520088E2F9 /* AppDelegate.swift */,
 				FAC64FF125DEF9520088E2F9 /* SceneDelegate.swift */,
 				FAC64FF325DEF9520088E2F9 /* ViewController.swift */,
@@ -96,6 +120,7 @@
 				FAC64FFD25DEF9530088E2F9 /* LaunchScreen.storyboard */,
 				FAC6500025DEF9530088E2F9 /* Info.plist */,
 				FAC64FF825DEF9520088E2F9 /* SportsApp.xcdatamodeld */,
+				62895C6525E5E03700D285B2 /* CCollectionViewController.swift */,
 			);
 			path = SportsApp;
 			sourceTree = "<group>";
@@ -216,10 +241,13 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				62895C6625E5E03700D285B2 /* CCollectionViewController.swift in Sources */,
 				FAC64FF425DEF9520088E2F9 /* ViewController.swift in Sources */,
 				FAC64FF025DEF9520088E2F9 /* AppDelegate.swift in Sources */,
 				FAC64FFA25DEF9520088E2F9 /* SportsApp.xcdatamodeld in Sources */,
 				FAC6500C25DF03FC0088E2F9 /* SecondViewController.swift in Sources */,
+				62895C6425E5DE1600D285B2 /* RoundImageView.swift in Sources */,
+				62895C6825E5E2E200D285B2 /* UpComingEventCell.swift in Sources */,
 				FAC64FF225DEF9520088E2F9 /* SceneDelegate.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

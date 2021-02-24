@@ -7,12 +7,35 @@
 //
 
 import UIKit
+private let reuseIdentifier = "Cell"
+class SecondViewController: UITableViewController,UICollectionViewDelegate,UICollectionViewDataSource{
+    func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
+        return 10;
+    }
+    
+    func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
+        let cell = collectionView.dequeueReusableCell(withReuseIdentifier: reuseIdentifier, for: indexPath)
+        switch indexPath.row % 2 {
+        case 0:
+            cell.backgroundColor = UIColor.systemBlue
+        case 1:
+            cell.backgroundColor = UIColor.systemPink
+        default:
+            break
+        }
+    
+        // Configure the cell
+    
+        return cell
+    }
+    
 
-class SecondViewController: UIViewController {
-
+    @IBOutlet weak var upComingEventCollController: UICollectionView!
     override func viewDidLoad() {
         super.viewDidLoad()
         self.modalPresentationStyle = .fullScreen
+        upComingEventCollController.delegate = self
+        upComingEventCollController.dataSource = self
         
         // Do any additional setup after loading the view.
     }
