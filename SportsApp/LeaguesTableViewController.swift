@@ -7,40 +7,111 @@
 //
 
 import UIKit
+import Alamofire
+import SDWebImage
+import SwiftyJSON
+
 
 class LeaguesTableViewController: UITableViewController {
-    var sport:String = ""
+    var currentSport:String = ""
+    
+    var leagueIds:Array<String> = []
+    var leagues:Array<League> = []
+    
+    
     override func viewDidLoad() {
         super.viewDidLoad()
-        print(sport)
+        print(currentSport)
         // Uncomment the following line to preserve selection between presentations
         // self.clearsSelectionOnViewWillAppear = false
 
         // Uncomment the following line to display an Edit button in the navigation bar for this view controller.
         // self.navigationItem.rightBarButtonItem = self.editButtonItem
+        
+        //get League IDS
+        AF.request("https://www.thesportsdb.com/api/v1/json/1/all_leagues.php").responseJSON { (response) in
+            switch response.result {
+            case .success(let value):
+                let json = JSON(value)
+                let leaguesArr = json["leagues"].arrayValue
+                for league in leaguesArr {
+                    let leagueDic = league.dictionaryValue
+                    if leagueDic["strSport"]?.stringValue == self.currentSport
+                    {
+                        let id = leagueDic["idLeague"]?.stringValue
+                        self.leagueIds.append(id!)
+                        for id in self.leagueIds
+                        {
+                            let leagueUrl = "https://www.thesportsdb.com/api/v1/json/1/lookupleague.php?id" + "=" + id
+                            /*AF.request(leagueUrl).responseJSON { (response) in
+                                switch response.result {
+                                case .success(let value):
+                                    let json = JSON(value)
+                                    let leaguesArr = json["leagues"].arrayValue
+                                    for league in leaguesArr {
+                                        let leagueDic = league.dictionaryValue
+                                        if leagueDic["strSport"]?.stringValue == self.currentSport
+                                        {
+                                            let name = leagueDic["strLeague"]?.stringValue
+                                            let badge = leagueDic["strBadge"]?.stringValue
+                                            let link = leagueDic["strYoutube"]?.stringValue
+                                            self.leagues.append(League(leagueName: name!, leagueBadge: badge!, leagueLink: link!))
+                                        }else{
+                                            continue
+                                        }
+                                        
+                                    }
+                                
+                                    self.tableView.reloadData()
+                                case .failure(let error):
+                                    print(error)
+                                }
+                            }*/
+                        }
+                        
+                    }else{
+                        continue
+                    }
+                    
+                }
+            
+                
+            case .failure(let error):
+                print(error)
+            }
+        }
+        print(leagueIds.count)
+        //get league Details by ID
+        
+        
+        
+        
+        
     }
 
     // MARK: - Table view data source
 
     override func numberOfSections(in tableView: UITableView) -> Int {
         // #warning Incomplete implementation, return the number of sections
-        return 0
+        return 1
     }
 
     override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         // #warning Incomplete implementation, return the number of rows
-        return 0
+        return leagues.count
     }
 
-    /*
+    
     override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        let cell = tableView.dequeueReusableCell(withIdentifier: "reuseIdentifier", for: indexPath)
-
+        let cell = tableView.dequeueReusableCell(withIdentifier: "LeaguesCell", for: indexPath) as! LeaguesTableViewCell
+        
         // Configure the cell...
-
+        cell.leagueNameLabel.text = leagues[indexPath.row].leagueName
+        cell.leagueBadgeIV.sd_setImage(with: URL(string: leagues[indexPath.row].leagueBadge!), placeholderImage: UIImage(named: "placeholder"))
+        
         return cell
     }
-    */
+    
 
     /*
     // Override to support conditional editing of the table view.

@@ -87,7 +87,7 @@ class SportsCollectionViewController: UICollectionViewController,UICollectionVie
     }
     override func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
         let leaguesTVC = self.storyboard?.instantiateViewController(withIdentifier: "LeaguesTVC") as! LeaguesTableViewController
-        leaguesTVC.sport = sports[indexPath.row].sportName!
+        leaguesTVC.currentSport = sports[indexPath.row].sportName!
         leaguesTVC.modalPresentationStyle = .fullScreen
         
         self.navigationController?.pushViewController(leaguesTVC, animated: true)
