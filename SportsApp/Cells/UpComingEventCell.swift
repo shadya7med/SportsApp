@@ -13,12 +13,16 @@ class UpComingEventCell: UICollectionViewCell {
     @IBOutlet weak var homeTeamImage: RoundImageView!
     
     @IBOutlet weak var awayTeamImage: RoundImageView!
+
+    @IBOutlet weak var homeTeamName: UILabel!
     
+    @IBOutlet weak var awayTeamName: UILabel!
     
+    @IBOutlet weak var dateField: UILabel!
     override func layoutSubviews() {
         super.layoutSubviews()
         layer.cornerRadius = frame.height/8
         layer.masksToBounds = true
-        layer.borderWidth = 1
+        
     }
 }

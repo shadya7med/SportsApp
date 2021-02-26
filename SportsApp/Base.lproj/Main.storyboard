@@ -144,11 +144,12 @@
         <scene sceneID="byz-AY-Drf">
             <objects>
                 <viewControllerPlaceholder storyboardName="Second" id="iKA-Bh-g5v" sceneMemberID="viewController">
+                    <tabBarItem key="tabBarItem" title="Item" id="kZj-UN-4TJ"/>
                     <navigationItem key="navigationItem" id="6yv-AK-1tU"/>
                 </viewControllerPlaceholder>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="dZT-sj-3Kr" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="5724.6376811594209" y="126.5625"/>
+            <point key="canvasLocation" x="3422" y="-273"/>
         </scene>
         <!--Tab Bar Controller-->
         <scene sceneID="73E-zh-jDb">
@@ -163,6 +164,7 @@
                     <connections>
                         <segue destination="jpc-Pc-SEb" kind="relationship" relationship="viewControllers" id="ADz-0W-LgI"/>
                         <segue destination="e1r-cx-mAy" kind="relationship" relationship="viewControllers" id="XmF-o1-03A"/>
+                        <segue destination="iKA-Bh-g5v" kind="relationship" relationship="viewControllers" id="pUw-PP-BOD"/>
                     </connections>
                 </tabBarController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="bhc-L0-Efa" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
