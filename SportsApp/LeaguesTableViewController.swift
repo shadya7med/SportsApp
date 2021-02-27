@@ -40,40 +40,20 @@ class LeaguesTableViewController: UITableViewController {
                     {
                         let id = leagueDic["idLeague"]?.stringValue
                         self.leagueIds.append(id!)
-                        for id in self.leagueIds
-                        {
-                            let leagueUrl = "https://www.thesportsdb.com/api/v1/json/1/lookupleague.php?id" + "=" + id
-                            /*AF.request(leagueUrl).responseJSON { (response) in
-                                switch response.result {
-                                case .success(let value):
-                                    let json = JSON(value)
-                                    let leaguesArr = json["leagues"].arrayValue
-                                    for league in leaguesArr {
-                                        let leagueDic = league.dictionaryValue
-                                        if leagueDic["strSport"]?.stringValue == self.currentSport
-                                        {
-                                            let name = leagueDic["strLeague"]?.stringValue
-                                            let badge = leagueDic["strBadge"]?.stringValue
-                                            let link = leagueDic["strYoutube"]?.stringValue
-                                            self.leagues.append(League(leagueName: name!, leagueBadge: badge!, leagueLink: link!))
-                                        }else{
-                                            continue
-                                        }
-                                        
-                                    }
-                                
-                                    self.tableView.reloadData()
-                                case .failure(let error):
-                                    print(error)
-                                }
-                            }*/
-                        }
                         
                     }else{
                         continue
                     }
                     
                 }
+                
+                
+                self.tableView.reloadData()
+                    
+                    
+                    
+     
+                
             
                 
             case .failure(let error):
@@ -104,6 +84,29 @@ class LeaguesTableViewController: UITableViewController {
     
     override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(withIdentifier: "LeaguesCell", for: indexPath) as! LeaguesTableViewCell
+        let temp = self.leagueIds[indexPath.row]
+        let leagueUrl = "https://www.thesportsdb.com/api/v1/json/1/lookupleague.php?id" + "=" + temp
+        print(leagueUrl)
+        AF.request(leagueUrl).responseJSON { (response) in
+            switch response.result {
+            case .success(let value):
+                let json = JSON(value)
+                let league = json["leagues"].arrayValue
+                
+                let leagueDic = league[0].dictionaryValue
+                let name = leagueDic["strLeague"]?.stringValue
+                let badge = leagueDic["strBadge"]?.stringValue
+                let link = leagueDic["strYoutube"]?.stringValue
+                self.leagues.append(League(leagueName: name!, leagueBadge: badge!, leagueLink: link!))
+                
+                self.tableView.reloadData()
+                
+            case .failure(let error):
+                print(error)
+            }
+        }
+        
+        
         
         // Configure the cell...
         cell.leagueNameLabel.text = leagues[indexPath.row].leagueName

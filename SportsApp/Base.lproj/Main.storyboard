@@ -7,7 +7,7 @@
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
     <scenes>
-        <!--Sports Collection View Controller-->
+        <!--Sports-->
         <scene sceneID="bct-X3-Za3">
             <objects>
                 <collectionViewController id="F46-DB-7hk" customClass="SportsCollectionViewController" customModule="SportsApp" customModuleProvider="target" sceneMemberID="viewController">
@@ -54,7 +54,7 @@
                             <outlet property="delegate" destination="F46-DB-7hk" id="DVn-S5-t7Y"/>
                         </connections>
                     </collectionView>
-                    <navigationItem key="navigationItem" id="gsX-Y3-83d"/>
+                    <navigationItem key="navigationItem" title="Sports" id="gsX-Y3-83d"/>
                 </collectionViewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="xym-5D-qaP" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
             </objects>
