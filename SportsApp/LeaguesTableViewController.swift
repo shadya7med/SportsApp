@@ -17,7 +17,7 @@ class LeaguesTableViewController: UITableViewController {
     
     var leagueIds:Array<String> = []
     var leagues:Array<League> = []
-    
+
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -46,13 +46,8 @@ class LeaguesTableViewController: UITableViewController {
                     }
                     
                 }
-                
-                
                 self.tableView.reloadData()
-                    
-                    
-                    
-     
+                
                 
             
                 
@@ -78,7 +73,7 @@ class LeaguesTableViewController: UITableViewController {
 
     override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         // #warning Incomplete implementation, return the number of rows
-        return leagues.count
+        return leagueIds.count
     }
 
     
@@ -86,7 +81,12 @@ class LeaguesTableViewController: UITableViewController {
         let cell = tableView.dequeueReusableCell(withIdentifier: "LeaguesCell", for: indexPath) as! LeaguesTableViewCell
         let temp = self.leagueIds[indexPath.row]
         let leagueUrl = "https://www.thesportsdb.com/api/v1/json/1/lookupleague.php?id" + "=" + temp
-        print(leagueUrl)
+        let leagueIds = leagues.map { (League) -> String in
+            return League.leagueId!
+        }
+        
+        if !leagueIds.contains(temp)
+        {
         AF.request(leagueUrl).responseJSON { (response) in
             switch response.result {
             case .success(let value):
@@ -97,24 +97,38 @@ class LeaguesTableViewController: UITableViewController {
                 let name = leagueDic["strLeague"]?.stringValue
                 let badge = leagueDic["strBadge"]?.stringValue
                 let link = leagueDic["strYoutube"]?.stringValue
-                self.leagues.append(League(leagueName: name!, leagueBadge: badge!, leagueLink: link!))
-                
-                self.tableView.reloadData()
+                self.leagues.append(League(leagueId : temp,leagueName: name!, leagueBadge: badge!, leagueLink: link!))
+                cell.leagueNameLabel.text = name
+
+                cell.leagueBadgeIV.sd_setImage(with: URL(string: badge ?? ""),placeholderImage: UIImage(named: "placeholder"))
                 
             case .failure(let error):
                 print(error)
             }
         }
+        }
+        else{
+            let league = leagues.filter { (League) -> Bool in
+                return League.leagueId == temp
+            }
+            cell.leagueNameLabel.text = league[0].leagueName
+
+            cell.leagueBadgeIV.sd_setImage(with: URL(string: league[0].leagueBadge ?? ""),placeholderImage: UIImage(named: "placeholder"))
+            
+        }
         
         
         
         // Configure the cell...
-        cell.leagueNameLabel.text = leagues[indexPath.row].leagueName
-        cell.leagueBadgeIV.sd_setImage(with: URL(string: leagues[indexPath.row].leagueBadge!), placeholderImage: UIImage(named: "placeholder"))
-        
+    
         return cell
     }
-    
+    override func tableView(_ tableView: UITableView, estimatedHeightForRowAt indexPath: IndexPath) -> CGFloat {
+        return 185
+    }
+    override func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
+        return 185
+    }
 
     /*
     // Override to support conditional editing of the table view.

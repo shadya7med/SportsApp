@@ -9,11 +9,13 @@
 import UIKit
 
 class League {
+    var leagueId : String?
     var leagueName:String?
     var leagueBadge:String?
     var leagueLink:String?
     
-    init(leagueName:String,leagueBadge:String,leagueLink:String) {
+    init(leagueId : String,leagueName:String,leagueBadge:String,leagueLink:String) {
+        self.leagueId = leagueId
         self.leagueName = leagueName
         self.leagueBadge = leagueBadge
         self.leagueLink = leagueLink
