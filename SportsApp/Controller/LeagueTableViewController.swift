@@ -138,11 +138,11 @@ extension LeagueTableViewController : UICollectionViewDataSource,UICollectionVie
         
         switch collectionView.tag {
         case 3:
-            return  CGSize(width: tableView.frame.width/3, height: tableView.frame.height/5)
+            return  CGSize(width: tableView.frame.width/3, height: tableView.frame.height/4.75)
         case 4:
             return CGSize(width: tableView.frame.width/1.2, height: tableView.frame.height/13)
         case 5:
-            return  CGSize(width: tableView.frame.width/3, height: tableView.frame.height/8)
+            return  CGSize(width: tableView.frame.width/4, height: tableView.frame.height/8)
         default:
             return  CGSize(width: tableView.frame.width/3, height: tableView.frame.height/2)
         }
