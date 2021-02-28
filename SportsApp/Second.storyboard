@@ -105,6 +105,12 @@
                                                                         <nil key="textColor"/>
                                                                         <nil key="highlightedColor"/>
                                                                     </label>
+                                                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="fQr-yl-HvV">
+                                                                        <rect key="frame" x="47" y="136" width="37.5" height="18"/>
+                                                                        <fontDescription key="fontDescription" type="system" pointSize="15"/>
+                                                                        <nil key="textColor"/>
+                                                                        <nil key="highlightedColor"/>
+                                                                    </label>
                                                                 </subviews>
                                                                 <constraints>
                                                                     <constraint firstItem="HXK-tJ-IqT" firstAttribute="top" secondItem="Yvq-4h-Sby" secondAttribute="bottom" id="5ZA-fY-ZID"/>
@@ -112,6 +118,8 @@
                                                                     <constraint firstAttribute="trailing" secondItem="HXK-tJ-IqT" secondAttribute="trailing" constant="8" id="G0w-K1-Bhk"/>
                                                                     <constraint firstItem="Yvq-4h-Sby" firstAttribute="leading" secondItem="bsr-Ki-6sk" secondAttribute="leading" constant="8" id="GpK-H4-S9p"/>
                                                                     <constraint firstItem="HXK-tJ-IqT" firstAttribute="leading" secondItem="bsr-Ki-6sk" secondAttribute="leading" constant="8" id="VnF-lH-QGL"/>
+                                                                    <constraint firstItem="fQr-yl-HvV" firstAttribute="centerX" secondItem="bsr-Ki-6sk" secondAttribute="centerX" id="Xnd-wR-JA9"/>
+                                                                    <constraint firstItem="0PX-ta-ZwW" firstAttribute="top" secondItem="fQr-yl-HvV" secondAttribute="bottom" id="ZbW-tS-VWr"/>
                                                                     <constraint firstItem="uzC-OV-reX" firstAttribute="top" secondItem="bsr-Ki-6sk" secondAttribute="top" constant="18" id="aNk-o3-zOm"/>
                                                                     <constraint firstItem="0PX-ta-ZwW" firstAttribute="centerX" secondItem="bsr-Ki-6sk" secondAttribute="centerX" id="bH8-2z-OH3"/>
                                                                     <constraint firstItem="q8y-uy-ixX" firstAttribute="leading" secondItem="bsr-Ki-6sk" secondAttribute="leading" constant="4" id="bbw-Ih-pxh"/>
@@ -128,9 +136,10 @@
                                                             <connections>
                                                                 <outlet property="awayTeamImage" destination="uzC-OV-reX" id="M4G-Fc-KOE"/>
                                                                 <outlet property="awayTeamName" destination="HXK-tJ-IqT" id="hSc-HV-owV"/>
-                                                                <outlet property="dateField" destination="0PX-ta-ZwW" id="QJ3-C5-U7z"/>
+                                                                <outlet property="dateField" destination="fQr-yl-HvV" id="XYd-tg-Cw8"/>
                                                                 <outlet property="homeTeamImage" destination="q8y-uy-ixX" id="Kdr-kA-0dg"/>
                                                                 <outlet property="homeTeamName" destination="Yvq-4h-Sby" id="Trk-c3-yxj"/>
+                                                                <outlet property="timeField" destination="0PX-ta-ZwW" id="RDB-kD-NEZ"/>
                                                             </connections>
                                                         </collectionViewCell>
                                                     </cells>
@@ -269,7 +278,7 @@
                                             <autoresizingMask key="autoresizingMask"/>
                                             <subviews>
                                                 <collectionView clipsSubviews="YES" multipleTouchEnabled="YES" tag="5" contentMode="scaleToFill" dataMode="prototypes" translatesAutoresizingMaskIntoConstraints="NO" id="tJ7-vo-mTp" customClass="RoundCollectionView" customModule="SportsApp" customModuleProvider="target">
-                                                    <rect key="frame" x="10" y="29.5" width="621" height="237"/>
+                                                    <rect key="frame" x="10" y="29.5" width="414" height="237"/>
                                                     <color key="backgroundColor" white="0.0" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                                     <collectionViewFlowLayout key="collectionViewLayout" scrollDirection="horizontal" minimumLineSpacing="10" minimumInteritemSpacing="10" id="gWU-9n-8i2">
                                                         <size key="itemSize" width="131" height="181"/>
@@ -312,7 +321,7 @@
                                                 <constraint firstItem="tJ7-vo-mTp" firstAttribute="leading" secondItem="dxb-JB-MFG" secondAttribute="leading" constant="10" id="BOA-Ci-bFZ"/>
                                                 <constraint firstItem="tJ7-vo-mTp" firstAttribute="centerY" secondItem="dxb-JB-MFG" secondAttribute="centerY" id="cWE-28-Ume"/>
                                                 <constraint firstItem="tJ7-vo-mTp" firstAttribute="height" secondItem="dxb-JB-MFG" secondAttribute="height" multiplier="0.8" id="dEm-nZ-Wrf"/>
-                                                <constraint firstItem="tJ7-vo-mTp" firstAttribute="width" secondItem="dxb-JB-MFG" secondAttribute="width" multiplier="1.5" id="pIc-Ry-yn8"/>
+                                                <constraint firstItem="tJ7-vo-mTp" firstAttribute="width" secondItem="dxb-JB-MFG" secondAttribute="width" id="pIc-Ry-yn8"/>
                                             </constraints>
                                         </tableViewCellContentView>
                                     </tableViewCell>

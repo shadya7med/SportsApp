@@ -8,6 +8,8 @@
 
 /* Begin PBXBuildFile section */
 		620C3E3125E8225F008C8355 /* LeagueTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 620C3E3025E8225F008C8355 /* LeagueTableViewController.swift */; };
+		621826E825EAC7B9009CDFF6 /* Team.swift in Sources */ = {isa = PBXBuildFile; fileRef = 621826E725EAC7B9009CDFF6 /* Team.swift */; };
+		621826EA25EACF9B009CDFF6 /* Event.swift in Sources */ = {isa = PBXBuildFile; fileRef = 621826E925EACF9B009CDFF6 /* Event.swift */; };
 		6266866F25E8F3020042BB20 /* RecentEventCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6266866E25E8F3020042BB20 /* RecentEventCell.swift */; };
 		6266867125E8F3170042BB20 /* TeamCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6266867025E8F3170042BB20 /* TeamCell.swift */; };
 		6266867325E957190042BB20 /* RoundCollectionView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6266867225E957190042BB20 /* RoundCollectionView.swift */; };
@@ -35,6 +37,8 @@
 /* Begin PBXFileReference section */
 		01C9768D3B11AE283641E57D /* Pods-SportsApp.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-SportsApp.release.xcconfig"; path = "Target Support Files/Pods-SportsApp/Pods-SportsApp.release.xcconfig"; sourceTree = "<group>"; };
 		620C3E3025E8225F008C8355 /* LeagueTableViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LeagueTableViewController.swift; sourceTree = "<group>"; };
+		621826E725EAC7B9009CDFF6 /* Team.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Team.swift; sourceTree = "<group>"; };
+		621826E925EACF9B009CDFF6 /* Event.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Event.swift; sourceTree = "<group>"; };
 		6266866E25E8F3020042BB20 /* RecentEventCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RecentEventCell.swift; sourceTree = "<group>"; };
 		6266867025E8F3170042BB20 /* TeamCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TeamCell.swift; sourceTree = "<group>"; };
 		6266867225E957190042BB20 /* RoundCollectionView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RoundCollectionView.swift; sourceTree = "<group>"; };
@@ -125,6 +129,8 @@
 			children = (
 				FA008A9625E83014005A638D /* Sport.swift */,
 				FA008A9F25E85E66005A638D /* League.swift */,
+				621826E725EAC7B9009CDFF6 /* Team.swift */,
+				621826E925EACF9B009CDFF6 /* Event.swift */,
 			);
 			path = Classes;
 			sourceTree = "<group>";
@@ -289,7 +295,9 @@
 			files = (
 				FA008AA025E85E66005A638D /* League.swift in Sources */,
 				FA008A9B25E858A4005A638D /* LeaguesTableViewController.swift in Sources */,
+				621826E825EAC7B9009CDFF6 /* Team.swift in Sources */,
 				FA008A9725E83014005A638D /* Sport.swift in Sources */,
+				621826EA25EACF9B009CDFF6 /* Event.swift in Sources */,
 				6266866F25E8F3020042BB20 /* RecentEventCell.swift in Sources */,
 				62895C6625E5E03700D285B2 /* CCollectionViewController.swift in Sources */,
 				FAC64FF025DEF9520088E2F9 /* AppDelegate.swift in Sources */,

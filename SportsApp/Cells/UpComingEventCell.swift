@@ -18,6 +18,7 @@ class UpComingEventCell: UICollectionViewCell {
     
     @IBOutlet weak var awayTeamName: UILabel!
     
+    @IBOutlet weak var timeField: UILabel!
     @IBOutlet weak var dateField: UILabel!
     override func layoutSubviews() {
         super.layoutSubviews()
