@@ -12,7 +12,7 @@ import SDWebImage
 import SwiftyJSON
 
 
-class LeaguesTableViewController: UITableViewController {
+class LeaguesTableViewController: UITableViewController,LeagueVideoButtonDelegate {
     var currentSport:String = ""
     
     var leagueIds:Array<String> = []
@@ -58,9 +58,7 @@ class LeaguesTableViewController: UITableViewController {
         print(leagueIds.count)
         //get league Details by ID
         
-        
-        
-        
+   
         
     }
 
@@ -99,7 +97,18 @@ class LeaguesTableViewController: UITableViewController {
                 let link = leagueDic["strYoutube"]?.stringValue
                 self.leagues.append(League(leagueId : temp,leagueName: name!, leagueBadge: badge!, leagueLink: link!))
                 cell.leagueNameLabel.text = name
-
+                //check if there's a link
+                if link != ""
+                {
+                    cell.link = link
+                    cell.linkDelegate = self
+                }else{
+                    //hide the button if there's no link
+                    cell.leagueVideoBtn.isHidden = true
+                }
+                
+                
+                
                 cell.leagueBadgeIV.sd_setImage(with: URL(string: badge ?? ""),placeholderImage: UIImage(named: "placeholder"))
                 
             case .failure(let error):
@@ -114,7 +123,8 @@ class LeaguesTableViewController: UITableViewController {
             cell.leagueNameLabel.text = league[0].leagueName
 
             cell.leagueBadgeIV.sd_setImage(with: URL(string: league[0].leagueBadge ?? ""),placeholderImage: UIImage(named: "placeholder"))
-            
+            cell.link = league[0].leagueLink
+            cell.linkDelegate = self
         }
         
         
@@ -129,7 +139,30 @@ class LeaguesTableViewController: UITableViewController {
     override func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
         return 185
     }
+    
+    
+    override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+        let svc = self.storyboard?.instantiateViewController(identifier: "SecondVC") as! LeagueTableViewController
+        svc.id = leagueIds[indexPath.row]
+        svc.modalPresentationStyle = .fullScreen
+        present(svc, animated: true, completion: nil)
+    }
 
+    
+    // MARK:  - cell link Delegate
+    func cellButtonTapped(link: String) {
+            //check if there's a url
+            if(link != nil)
+            {
+                //open the link in safari instead
+                let youtubeUrl = URL(string:"https://\(link)")!
+                UIApplication.shared.openURL(youtubeUrl)
+            }
+            
+        
+        
+    }
+    
     /*
     // Override to support conditional editing of the table view.
     override func tableView(_ tableView: UITableView, canEditRowAt indexPath: IndexPath) -> Bool {

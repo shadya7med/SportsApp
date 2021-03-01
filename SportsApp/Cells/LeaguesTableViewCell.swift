@@ -7,24 +7,33 @@
 //
 
 import UIKit
+protocol LeagueVideoButtonDelegate {
+    func cellButtonTapped(link:String)
+}
 
 class LeaguesTableViewCell: UITableViewCell {
 
+    var linkDelegate:LeagueVideoButtonDelegate?
+    var link:String?
+    
     @IBOutlet weak var leagueBadgeIV: UIImageView!
     
     @IBOutlet weak var leagueNameLabel: UILabel!
     
     @IBOutlet weak var leagueVideoBtn: UIButton!
     
+    @IBAction func linkButtonAction(_ sender: Any) {
+        linkDelegate?.cellButtonTapped(link: link!)
+        
+    }
+    
+    
+    
     override func awakeFromNib() {
         super.awakeFromNib()
         // Initialization code
     }
 
-    override func setSelected(_ selected: Bool, animated: Bool) {
-        super.setSelected(selected, animated: animated)
-
-        // Configure the view for the selected state
-    }
+    
 
 }

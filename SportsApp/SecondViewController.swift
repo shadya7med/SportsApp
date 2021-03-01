@@ -9,6 +9,9 @@
 import UIKit
 private let reuseIdentifier = "Cell"
 class SecondViewController: UITableViewController,UICollectionViewDelegate,UICollectionViewDataSource{
+    var id:String?
+    
+    
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
         return 10;
     }
@@ -38,6 +41,7 @@ class SecondViewController: UITableViewController,UICollectionViewDelegate,UICol
         upComingEventCollController.dataSource = self
         
         // Do any additional setup after loading the view.
+        print("ID: \(id!)")
     }
     
     /*
