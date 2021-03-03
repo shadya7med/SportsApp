@@ -10,6 +10,7 @@
 		620C3E3125E8225F008C8355 /* LeagueTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 620C3E3025E8225F008C8355 /* LeagueTableViewController.swift */; };
 		621826E825EAC7B9009CDFF6 /* Team.swift in Sources */ = {isa = PBXBuildFile; fileRef = 621826E725EAC7B9009CDFF6 /* Team.swift */; };
 		621826EA25EACF9B009CDFF6 /* Event.swift in Sources */ = {isa = PBXBuildFile; fileRef = 621826E925EACF9B009CDFF6 /* Event.swift */; };
+		6239A36C25EF067D006E26AE /* TeamDetailsTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6239A36B25EF067D006E26AE /* TeamDetailsTableViewController.swift */; };
 		6266866F25E8F3020042BB20 /* RecentEventCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6266866E25E8F3020042BB20 /* RecentEventCell.swift */; };
 		6266867125E8F3170042BB20 /* TeamCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6266867025E8F3170042BB20 /* TeamCell.swift */; };
 		6266867325E957190042BB20 /* RoundCollectionView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6266867225E957190042BB20 /* RoundCollectionView.swift */; };
@@ -38,6 +39,7 @@
 		620C3E3025E8225F008C8355 /* LeagueTableViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LeagueTableViewController.swift; sourceTree = "<group>"; };
 		621826E725EAC7B9009CDFF6 /* Team.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Team.swift; sourceTree = "<group>"; };
 		621826E925EACF9B009CDFF6 /* Event.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Event.swift; sourceTree = "<group>"; };
+		6239A36B25EF067D006E26AE /* TeamDetailsTableViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TeamDetailsTableViewController.swift; sourceTree = "<group>"; };
 		6266866E25E8F3020042BB20 /* RecentEventCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RecentEventCell.swift; sourceTree = "<group>"; };
 		6266867025E8F3170042BB20 /* TeamCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TeamCell.swift; sourceTree = "<group>"; };
 		6266867225E957190042BB20 /* RoundCollectionView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RoundCollectionView.swift; sourceTree = "<group>"; };
@@ -97,6 +99,7 @@
 			isa = PBXGroup;
 			children = (
 				620C3E3025E8225F008C8355 /* LeagueTableViewController.swift */,
+				6239A36B25EF067D006E26AE /* TeamDetailsTableViewController.swift */,
 			);
 			path = Controller;
 			sourceTree = "<group>";
@@ -300,6 +303,7 @@
 				6266867125E8F3170042BB20 /* TeamCell.swift in Sources */,
 				FAC64FFA25DEF9520088E2F9 /* SportsApp.xcdatamodeld in Sources */,
 				620C3E3125E8225F008C8355 /* LeagueTableViewController.swift in Sources */,
+				6239A36C25EF067D006E26AE /* TeamDetailsTableViewController.swift in Sources */,
 				FAC6500C25DF03FC0088E2F9 /* SecondViewController.swift in Sources */,
 				FA008A9D25E85CEE005A638D /* LeaguesTableViewCell.swift in Sources */,
 				62895C6425E5DE1600D285B2 /* RoundImageView.swift in Sources */,

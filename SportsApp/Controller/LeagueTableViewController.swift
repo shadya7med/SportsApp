@@ -16,21 +16,31 @@ private let upComingEventReuseIdentifier = "Cell"
 private let recentEventReuseIdentifier = "Cell2"
 private let teamReuseIdentifier = "Cell3"
 class LeagueTableViewController: UITableViewController {
+    var flag = true
+    var gradientLayer = CAGradientLayer()
+    @IBOutlet weak var favBtn: UIButton!
+    
     @IBOutlet weak var upComingEventCollController: UICollectionView!
     @IBOutlet weak var recentEventCollController: UICollectionView!
     @IBOutlet weak var teamCollController: UICollectionView!
     var horizontalFlowLayout : UICollectionViewFlowLayout?
     var verticalFlowLayout :UICollectionViewFlowLayout?
-    let arrayOfHeaders = ["Upcoming Events","Recent Events","Teams"]
     var id = "4335"
     var teamsArray = Array<Team>()
     var eventsArray = Array<Event>()
     let leagueStr = "https://www.thesportsdb.com/api/v1/json/1/lookup_all_teams.php?id="
     let leagueEventStr = "https://www.thesportsdb.com/api/v1/json/1/eventspastleague.php?id="
+    let alertView = UIAlertController(title: "Favourite Leagues", message: "League Added to Favourites", preferredStyle: UIAlertController.Style.alert)
+    
+    let alertAction = UIAlertAction(title: "Ok", style: UIAlertAction.Style.default, handler: nil)
+    
+    
     
     override func viewDidLoad() {
         super.viewDidLoad()
         self.modalPresentationStyle = .fullScreen
+        alertView.addAction(alertAction)
+        
         
         
         upComingEventCollController.delegate = self
@@ -41,10 +51,10 @@ class LeagueTableViewController: UITableViewController {
         teamCollController.dataSource = self
         
         
-        upComingEventCollController.collectionViewLayout.collectionView?.backgroundColor = tableView.backgroundColor
-        recentEventCollController.collectionViewLayout.collectionView?.backgroundColor = tableView.backgroundColor
-        
-        tableView.tableHeaderView?.backgroundColor = tableView.backgroundColor
+        //        upComingEventCollController.collectionViewLayout.collectionView?.backgroundColor = tableView.backgroundColor
+        //        recentEventCollController.collectionViewLayout.collectionView?.backgroundColor = tableView.backgroundColor
+        //
+        //        tableView.tableHeaderView?.backgroundColor = tableView.backgroundColor
         
         
         AF.request(leagueStr + id).validate().responseJSON { (response) in
@@ -68,6 +78,41 @@ class LeagueTableViewController: UITableViewController {
         
         
         // Do any additional setup after loading the view.
+    }
+    override func viewDidLayoutSubviews() {
+        if gradientLayer.superlayer != nil {
+            gradientLayer.removeFromSuperlayer()
+        }
+        let topColor = UIColor(red: 16.0/255.0, green: 12.0/255.0, blue: 54.0/255.0, alpha: 1.0)
+        let bottomColor = UIColor(red: 57.0/255.0, green: 33.0/255.0, blue: 61.0/255.0, alpha: 1.0)
+        gradientLayer.startPoint = CGPoint(x: 0.0, y: 0.0)
+        gradientLayer.endPoint = CGPoint(x: 1.0, y: 1.0)
+        gradientLayer.colors = [topColor.cgColor, bottomColor.cgColor]
+        gradientLayer.frame = tableView.bounds
+        let backgroundView = UIView(frame: tableView.bounds)
+        backgroundView.layer.insertSublayer(gradientLayer, at: 0)
+        tableView.backgroundView = backgroundView
+    }
+    
+    @IBAction func favBtn(_ sender: Any) {
+        
+        if(flag)
+        {
+            favBtn.setImage(UIImage(systemName: "star.fill"), for: UIControl.State.normal)
+            alertView.message = "League Added to Favourites"
+            self.present(alertView, animated: true, completion: nil)
+            flag = false
+            
+        }
+        else{
+            favBtn.setImage(UIImage(systemName: "star"), for: UIControl.State.normal)
+            alertView.message = "League Removed from Favourites"
+            self.present(alertView, animated: true, completion: nil)
+            flag = true
+        }
+    }
+    @IBAction func backBtn(_ sender: Any) {
+        self.dismiss(animated: true, completion: nil)
     }
     func upcomingEventsRequest()
     {
@@ -96,11 +141,20 @@ class LeagueTableViewController: UITableViewController {
     }
     
     override func tableView(_ tableView: UITableView, estimatedHeightForRowAt indexPath: IndexPath) -> CGFloat {
-        
-        return tableView.frame.height/4
+        if(indexPath.row == 0)
+        {
+            return tableView.frame.height/12
+        }else{
+            return tableView.frame.height/3.5
+        }
     }
     override func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
-        return tableView.frame.height/4
+        if(indexPath.row == 0)
+        {
+            return tableView.frame.height/10
+        }else{
+            return tableView.frame.height/3.5
+        }
     }
     
     /*
@@ -112,18 +166,6 @@ class LeagueTableViewController: UITableViewController {
      // Pass the selected object to the new view controller.
      }
      */
-    override func tableView(_ tableView: UITableView, viewForHeaderInSection section: Int) -> UIView? {
-        let returnedView = UIView(frame: CGRect(x: 0, y: 0, width: view.frame.size.width, height: 25))
-        returnedView.backgroundColor = tableView.backgroundColor
-        
-        let label = UILabel(frame: CGRect(x: 10, y: 7, width: view.frame.size.width, height: 25))
-        label.text = arrayOfHeaders[section]
-        label.textColor = .white
-        
-        returnedView.addSubview(label)
-        
-        return returnedView
-    }
     
     
 }
@@ -227,6 +269,19 @@ extension LeagueTableViewController : UICollectionViewDataSource,UICollectionVie
             return  CGSize(width: tableView.frame.width/4, height: tableView.frame.height/8)
         default:
             return  CGSize(width: tableView.frame.width/3, height: tableView.frame.height/2)
+        }
+    
+    }
+    func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
+ 
+        switch collectionView.tag {
+        case 5:
+            let teamDetails = self.storyboard?.instantiateViewController(identifier: "teamDetailVC") as! TeamDetailsTableViewController
+            teamDetails.id = teamsArray[indexPath.row].teamId!
+            self.present(teamDetails, animated: true, completion: nil)
+            
+        default:
+            break
         }
     }
     
