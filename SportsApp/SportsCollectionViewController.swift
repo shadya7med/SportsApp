@@ -16,6 +16,27 @@ private let reuseIdentifier = "SportsCell"
 class SportsCollectionViewController: UICollectionViewController,UICollectionViewDelegateFlowLayout {
     
     var sports:Array<Sport> = []
+    var gradientLayer = CAGradientLayer()
+    
+    override func viewDidLayoutSubviews() {
+        
+        
+        
+        if gradientLayer.superlayer != nil {
+            gradientLayer.removeFromSuperlayer()
+        }
+        let topColor = UIColor(red: 16.0/255.0, green: 12.0/255.0, blue: 54.0/255.0, alpha: 1.0)
+        let bottomColor = UIColor(red: 57.0/255.0, green: 33.0/255.0, blue: 61.0/255.0, alpha: 1.0)
+        gradientLayer.startPoint = CGPoint(x: 0.0, y: 0.0)
+        gradientLayer.endPoint = CGPoint(x: 1.0, y: 1.0)
+        gradientLayer.colors = [topColor.cgColor, bottomColor.cgColor]
+        gradientLayer.frame = view.bounds
+        let backgroundView = UIView(frame: view.bounds)
+        backgroundView.layer.insertSublayer(gradientLayer, at: 0)
+        self.collectionView.backgroundView = backgroundView
+        
+        
+    }
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -49,6 +70,7 @@ class SportsCollectionViewController: UICollectionViewController,UICollectionVie
           
     }
 
+    
     /*
     // MARK: - Navigation
 
@@ -92,6 +114,21 @@ class SportsCollectionViewController: UICollectionViewController,UICollectionVie
         
         self.navigationController?.pushViewController(leaguesTVC, animated: true)
     }
+    
+    /*func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAtindexPath: IndexPath) -> CGSize {
+
+        let noOfCellsInRow = 2
+
+        let flowLayout = collectionViewLayout as! UICollectionViewFlowLayout
+
+        let totalSpace = flowLayout.sectionInset.left
+            + flowLayout.sectionInset.right
+            + (flowLayout.minimumInteritemSpacing * CGFloat(noOfCellsInRow - 1))
+
+        let size = Int((collectionView.bounds.width - totalSpace) / CGFloat(noOfCellsInRow))
+
+        return CGSize(width: size, height: size)
+    }*/
     // MARK: UICollectionViewDelegate
 
     /*

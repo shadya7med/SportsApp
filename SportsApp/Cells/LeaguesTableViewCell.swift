@@ -16,6 +16,8 @@ class LeaguesTableViewCell: UITableViewCell {
     var linkDelegate:LeagueVideoButtonDelegate?
     var link:String?
     
+    let gradientLayer = CAGradientLayer()
+    
     @IBOutlet weak var leagueBadgeIV: UIImageView!
     
     @IBOutlet weak var leagueNameLabel: UILabel!

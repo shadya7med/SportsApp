@@ -18,6 +18,28 @@ class LeaguesTableViewController: UITableViewController,LeagueVideoButtonDelegat
     var leagueIds:Array<String> = []
     var leagues:Array<League> = []
 
+    let  gradientLayer = CAGradientLayer()
+    
+    
+   override func viewDidLayoutSubviews() {
+        
+        
+        
+        if gradientLayer.superlayer != nil {
+            gradientLayer.removeFromSuperlayer()
+        }
+        let topColor = UIColor(red: 16.0/255.0, green: 12.0/255.0, blue: 54.0/255.0, alpha: 1.0)
+        let bottomColor = UIColor(red: 57.0/255.0, green: 33.0/255.0, blue: 61.0/255.0, alpha: 1.0)
+        gradientLayer.startPoint = CGPoint(x: 0.0, y: 0.0)
+        gradientLayer.endPoint = CGPoint(x: 1.0, y: 1.0)
+        gradientLayer.colors = [topColor.cgColor, bottomColor.cgColor]
+        gradientLayer.frame = view.bounds
+        let backgroundView = UIView(frame: view.bounds)
+        backgroundView.layer.insertSublayer(gradientLayer, at: 0)
+        self.tableView.backgroundView = backgroundView
+        
+        
+    }
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -128,6 +150,9 @@ class LeaguesTableViewController: UITableViewController,LeagueVideoButtonDelegat
         }
         
         
+        cell.leagueVideoBtn.layer.cornerRadius = 15
+        cell.leagueVideoBtn.layer.borderWidth = 1
+        cell.leagueVideoBtn.layer.borderColor = UIColor.black.cgColor
         
         // Configure the cell...
     

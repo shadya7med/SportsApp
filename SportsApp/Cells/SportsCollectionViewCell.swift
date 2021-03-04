@@ -13,5 +13,12 @@ class SportsCollectionViewCell: UICollectionViewCell {
     @IBOutlet weak var sportThumbIV: UIImageView!
     @IBOutlet weak var sportNameLabel: UILabel!
     
+    override func layoutSubviews() {
+        super.layoutSubviews()
+        layer.cornerRadius = frame.height/8
+        layer.masksToBounds = true
+        
+    }
+    
     
 }
