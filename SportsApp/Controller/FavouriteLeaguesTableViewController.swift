@@ -12,15 +12,16 @@ import CoreData
 
 class FavouriteLeaguesTableViewController: UITableViewController ,LeagueVideoButtonDelegate{
 
-    var leagues = Array<League>()
+    var leagues = Array<Leagues>()
     var leaguesResultSet = Array<NSManagedObject>()
-
+    let coreData = MyCoreDataClass.shared
     let  gradientLayer = CAGradientLayer()
-     
+    let alertView = UIAlertController(title: "League Url", message: "League url not available", preferredStyle: UIAlertController.Style.alert)
+    let alertAction = UIAlertAction(title: "Ok", style: UIAlertAction.Style.default, handler: nil)
      
     override func viewDidLayoutSubviews() {
          
-         
+         alertView.addAction(alertAction)
          
          if gradientLayer.superlayer != nil {
              gradientLayer.removeFromSuperlayer()
@@ -30,31 +31,30 @@ class FavouriteLeaguesTableViewController: UITableViewController ,LeagueVideoBut
          gradientLayer.startPoint = CGPoint(x: 0.0, y: 0.0)
          gradientLayer.endPoint = CGPoint(x: 1.0, y: 1.0)
          gradientLayer.colors = [topColor.cgColor, bottomColor.cgColor]
-         gradientLayer.frame = view.bounds
-         let backgroundView = UIView(frame: view.bounds)
+         gradientLayer.frame = CGRect(x: 0, y: 0, width: tableView.bounds.width, height: tableView.bounds.height*2)
+         let backgroundView = UIView(frame: CGRect(x: 0, y: 0, width: tableView.bounds.width, height: tableView.bounds.height*2))
          backgroundView.layer.insertSublayer(gradientLayer, at: 0)
          self.tableView.backgroundView = backgroundView
          
          
      }
     
-    override func viewDidLoad() {
-        super.viewDidLoad()
-        
-        let appDelegate = UIApplication.shared.delegate as! AppDelegate
-        
-        let viewContext = appDelegate.persistentContainer.viewContext
-        let leaguesEntity = NSEntityDescription.entity(forEntityName: "Leagues",in: viewContext)!
-        let leagueRequest = NSFetchRequest<NSManagedObject>(entityName: "Leagues")
-        do{
-            leaguesResultSet = try viewContext.fetch(leagueRequest)
-            for item in leaguesResultSet {
-                leagues.append(League(leagueId: item.value(forKey: "id") as! String, leagueName: item.value(forKey: "leagueName") as! String, leagueBadge: item.value(forKey: "leagueBadge") as! String, leagueLink: item.value(forKey: "leagueYTUrl") as! String))
-            }
-            tableView.reloadData()
-        }catch let error as Error{
-            print(error)
-        }
+    override func viewWillAppear(_ animated: Bool) {
+        leagues = coreData.fetchfromCoreData()
+        tableView.reloadData()
+//        let appDelegate = UIApplication.shared.delegate as! AppDelegate
+//
+//        let viewContext = appDelegate.persistentContainer.viewContext
+//        let leagueRequest = NSFetchRequest<NSManagedObject>(entityName: "Leagues")
+//        do{
+//            leaguesResultSet = try viewContext.fetch(leagueRequest)
+//            for item in leaguesResultSet {
+//                leagues.append(League(leagueId: item.value(forKey: "id") as! String, leagueName: item.value(forKey: "leagueName") as! String, leagueBadge: item.value(forKey: "leagueBadge") as! String, leagueLink: item.value(forKey: "leagueYTUrl") as! String))
+//            }
+//            tableView.reloadData()
+//        }catch let error{
+//            print(error)
+//        }
         
         // Uncomment the following line to preserve selection between presentations
         // self.clearsSelectionOnViewWillAppear = false
@@ -85,18 +85,23 @@ class FavouriteLeaguesTableViewController: UITableViewController ,LeagueVideoBut
         // Configure the cell...
         cell.leagueBadgeIV.sd_setImage(with: URL(string: leagues[indexPath.row].leagueBadge!), completed: nil)
         cell.leagueNameLabel.text = leagues[indexPath.row].leagueName
-        cell.link = leagues[indexPath.row].leagueLink
+        cell.link = leagues[indexPath.row].leagueYTUrl
         cell.linkDelegate = self
         
         cell.leagueVideoBtn.layer.cornerRadius = 15
-        cell.leagueVideoBtn.layer.borderWidth = 1
-        cell.leagueVideoBtn.layer.borderColor = UIColor.black.cgColor
+
         
         return cell
     }
     override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         let svc = self.storyboard?.instantiateViewController(identifier: "SecondVC") as! LeagueTableViewController
-        svc.id = leagues[indexPath.row].leagueId!
+        svc.id = leagues[indexPath.row].id!
+        let league = leagues.filter { (League) -> Bool in
+            return League.id == svc.id
+        }
+        svc.leagueName = league[0].leagueName
+        svc.leagueUrl = league[0].leagueYTUrl
+        svc.leagueBadge = league[0].leagueBadge
         svc.modalPresentationStyle = .fullScreen
         present(svc, animated: true, completion: nil)
     }
@@ -114,17 +119,24 @@ class FavouriteLeaguesTableViewController: UITableViewController ,LeagueVideoBut
     override func tableView(_ tableView: UITableView, commit editingStyle: UITableViewCell.EditingStyle, forRowAt indexPath: IndexPath) {
         if editingStyle == .delete {
             // Delete the row from the data source
-            let appDelegate = UIApplication.shared.delegate as! AppDelegate
-            
-            let viewContext = appDelegate.persistentContainer.viewContext
-            let leaguesEntity = NSEntityDescription.entity(forEntityName: "Leagues",in: viewContext)!
-            
-            viewContext.delete(leaguesResultSet[indexPath.row])
+//            let appDelegate = UIApplication.shared.delegate as! AppDelegate
+//
+//            let viewContext = appDelegate.persistentContainer.viewContext
+//
+//
+//            viewContext.delete(leaguesResultSet[indexPath.row])
+
+            coreData.deleteFromCoreData(id: leagues[indexPath.row].id!)
             leagues.remove(at: indexPath.row)
             tableView.deleteRows(at: [indexPath], with: .fade)
         }
     }
-    
+    override func tableView(_ tableView: UITableView, estimatedHeightForRowAt indexPath: IndexPath) -> CGFloat {
+        return tableView.frame.height/4
+    }
+    override func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
+        return tableView.frame.height/4
+    }
 
     /*
     // Override to support rearranging the table view.
@@ -143,12 +155,16 @@ class FavouriteLeaguesTableViewController: UITableViewController ,LeagueVideoBut
     // MARK:  - cell link Delegate
        func cellButtonTapped(link: String) {
                //check if there's a url
-               if(link != nil)
+               if(link != "")
                {
                    //open the link in safari instead
                    let youtubeUrl = URL(string:"https://\(link)")!
-                   UIApplication.shared.openURL(youtubeUrl)
+                  UIApplication.shared.open(youtubeUrl, options: [:], completionHandler: nil)
                }
+        else
+               {
+                self.present(alertView, animated: true, completion: nil)
+        }
                
            
            

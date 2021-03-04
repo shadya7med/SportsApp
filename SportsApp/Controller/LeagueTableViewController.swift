@@ -16,6 +16,7 @@ private let upComingEventReuseIdentifier = "Cell"
 private let recentEventReuseIdentifier = "Cell2"
 private let teamReuseIdentifier = "Cell3"
 class LeagueTableViewController: UITableViewController {
+    let coreData = MyCoreDataClass.shared;
     var flag = true
     var gradientLayer = CAGradientLayer()
     @IBOutlet weak var favBtn: UIButton!
@@ -26,6 +27,9 @@ class LeagueTableViewController: UITableViewController {
     var horizontalFlowLayout : UICollectionViewFlowLayout?
     var verticalFlowLayout :UICollectionViewFlowLayout?
     var id = "4335"
+    var leagueBadge : String?
+    var leagueName : String?
+    var leagueUrl : String?
     var teamsArray = Array<Team>()
     var eventsArray = Array<Event>()
     let leagueStr = "https://www.thesportsdb.com/api/v1/json/1/lookup_all_teams.php?id="
@@ -40,7 +44,16 @@ class LeagueTableViewController: UITableViewController {
         super.viewDidLoad()
         self.modalPresentationStyle = .fullScreen
         alertView.addAction(alertAction)
-        
+        if(coreData.fetchFromCoreDataWithId(id: id))
+        {
+            flag = false
+            favBtn.setImage(UIImage(systemName: "star.fill"), for: UIControl.State.normal)
+        }
+        else{
+            flag = true
+            favBtn.setImage(UIImage(systemName: "star"), for: UIControl.State.normal)
+            
+        }
         
         
         upComingEventCollController.delegate = self
@@ -101,6 +114,7 @@ class LeagueTableViewController: UITableViewController {
             favBtn.setImage(UIImage(systemName: "star.fill"), for: UIControl.State.normal)
             alertView.message = "League Added to Favourites"
             self.present(alertView, animated: true, completion: nil)
+            coreData.saveToCoreData(league: League(leagueId: id, leagueName: leagueName!, leagueBadge: leagueBadge!, leagueLink: leagueUrl!))
             flag = false
             
         }
@@ -108,6 +122,7 @@ class LeagueTableViewController: UITableViewController {
             favBtn.setImage(UIImage(systemName: "star"), for: UIControl.State.normal)
             alertView.message = "League Removed from Favourites"
             self.present(alertView, animated: true, completion: nil)
+            coreData.deleteFromCoreData(id: id)
             flag = true
         }
     }
@@ -202,20 +217,25 @@ extension LeagueTableViewController : UICollectionViewDataSource,UICollectionVie
             let awayTeam = teamsArray.filter { (team) -> Bool in
                 team.teamId == event.awayTeamId
             }
-            
-            upComingCell?.homeTeamImage.sd_setImage(with: URL(string: homeTeam[0].teamBadge!), placeholderImage: UIImage(named: "placeholder"))
-            upComingCell?.awayTeamImage.sd_setImage(with: URL(string: awayTeam[0].teamBadge!), placeholderImage: UIImage(named: "placeholder"))
-            upComingCell?.homeTeamName.text = homeTeam[0].teamName
-            upComingCell?.awayTeamName.text = awayTeam[0].teamName
-            upComingCell?.dateField.text = event.eventDate!
-            upComingCell?.timeField.text = event.eventTime!
-            switch indexPath.row % 2 {
-            case 0:
-                upComingCell!.backgroundColor = UIColor.systemBlue
-            case 1:
-                upComingCell!.backgroundColor = UIColor.systemPink
-            default:
-                break
+            if(homeTeam != [] && awayTeam != [])
+            {
+                upComingCell?.homeTeamImage.sd_setImage(with: URL(string: homeTeam[0].teamBadge!), placeholderImage: UIImage(named: "placeholder"))
+                upComingCell?.awayTeamImage.sd_setImage(with: URL(string: awayTeam[0].teamBadge!), placeholderImage: UIImage(named: "placeholder"))
+                upComingCell?.homeTeamName.text = homeTeam[0].teamName
+                upComingCell?.awayTeamName.text = awayTeam[0].teamName
+                upComingCell?.dateField.text = event.eventDate!
+                upComingCell?.timeField.text = event.eventTime!
+                switch indexPath.row % 2 {
+                case 0:
+                    upComingCell!.backgroundColor = UIColor.systemBlue
+                case 1:
+                    upComingCell!.backgroundColor = UIColor.systemPink
+                default:
+                    break
+                }
+            }
+            else{
+                upComingCell?.isHidden = true
             }
             return upComingCell!
         case 4 :
@@ -228,20 +248,25 @@ extension LeagueTableViewController : UICollectionViewDataSource,UICollectionVie
             let awayTeam = teamsArray.filter { (team) -> Bool in
                 team.teamId == event.awayTeamId
             }
-            
-            recentCell?.homeImageCell.sd_setImage(with: URL(string: homeTeam[0].teamBadge!), placeholderImage: UIImage(named: "placeholder"))
-            recentCell?.awayImageCell.sd_setImage(with: URL(string: awayTeam[0].teamBadge!), placeholderImage: UIImage(named: "placeholder"))
-            recentCell?.awayTeamName.text = awayTeam[0].teamShortName
-            recentCell?.homeTeamName.text = homeTeam[0].teamShortName
-            recentCell?.homeScore.text = event.homeScore
-            recentCell?.awayScore.text = event.awayScore
-            switch indexPath.row % 2 {
-            case 0:
-                recentCell!.backgroundColor = UIColor.systemBlue
-            case 1:
-                recentCell!.backgroundColor = UIColor.systemPink
-            default:
-                break
+            if(homeTeam != [] && awayTeam != [])
+            {
+                recentCell?.homeImageCell.sd_setImage(with: URL(string: homeTeam[0].teamBadge!), placeholderImage: UIImage(named: "placeholder"))
+                recentCell?.awayImageCell.sd_setImage(with: URL(string: awayTeam[0].teamBadge!), placeholderImage: UIImage(named: "placeholder"))
+                recentCell?.awayTeamName.text = awayTeam[0].teamShortName
+                recentCell?.homeTeamName.text = homeTeam[0].teamShortName
+                recentCell?.homeScore.text = event.homeScore
+                recentCell?.awayScore.text = event.awayScore
+                switch indexPath.row % 2 {
+                case 0:
+                    recentCell!.backgroundColor = UIColor.systemBlue
+                case 1:
+                    recentCell!.backgroundColor = UIColor.systemPink
+                default:
+                    break
+                }
+            }
+            else{
+                recentCell?.isHidden = true
             }
             return recentCell!
             
@@ -270,10 +295,10 @@ extension LeagueTableViewController : UICollectionViewDataSource,UICollectionVie
         default:
             return  CGSize(width: tableView.frame.width/3, height: tableView.frame.height/2)
         }
-    
+        
     }
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
- 
+        
         switch collectionView.tag {
         case 5:
             let teamDetails = self.storyboard?.instantiateViewController(identifier: "teamDetailVC") as! TeamDetailsTableViewController

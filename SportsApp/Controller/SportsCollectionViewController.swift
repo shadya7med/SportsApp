@@ -30,10 +30,21 @@ class SportsCollectionViewController: UICollectionViewController,UICollectionVie
         gradientLayer.startPoint = CGPoint(x: 0.0, y: 0.0)
         gradientLayer.endPoint = CGPoint(x: 1.0, y: 1.0)
         gradientLayer.colors = [topColor.cgColor, bottomColor.cgColor]
-        gradientLayer.frame = view.bounds
-        let backgroundView = UIView(frame: view.bounds)
+        gradientLayer.frame =  CGRect(x: 0, y: 0, width: view.bounds.width, height: view.bounds.height*2)
+        let backgroundView = UIView(frame: CGRect(x: 0, y: 0, width: view.bounds.width, height: view.bounds.height*2))
         backgroundView.layer.insertSublayer(gradientLayer, at: 0)
         self.collectionView.backgroundView = backgroundView
+        
+        self.navigationController?.navigationBar.setBackgroundImage(UIImage(), for: .default)
+        self.navigationController?.navigationBar.shadowImage = UIImage()
+        let blur = UIBlurEffect(style: UIBlurEffect.Style.dark)
+        let blurView = UIVisualEffectView(effect: blur)
+        blurView.frame = (self.tabBarController?.tabBar.bounds)!
+        blurView.autoresizingMask = .flexibleWidth
+        self.tabBarController?.tabBar.insertSubview(blurView, at: 0)
+       
+        
+        
         
         
     }
@@ -82,7 +93,12 @@ class SportsCollectionViewController: UICollectionViewController,UICollectionVie
     */
 
     // MARK: UICollectionViewDataSource
-
+    func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, minimumLineSpacingForSectionAt section: Int) -> CGFloat {
+        return 10;
+    }
+    func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, minimumInteritemSpacingForSectionAt section: Int) -> CGFloat {
+        return 10;
+    }
     override func numberOfSections(in collectionView: UICollectionView) -> Int {
         // #warning Incomplete implementation, return the number of sections
         return 1
@@ -105,7 +121,7 @@ class SportsCollectionViewController: UICollectionViewController,UICollectionVie
         return cell
     }
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
-        return CGSize(width: 160, height: 160)
+        return CGSize(width: collectionView.bounds.width/2.1, height: collectionView.bounds.width/2.1)
     }
     override func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
         let leaguesTVC = self.storyboard?.instantiateViewController(withIdentifier: "LeaguesTVC") as! LeaguesTableViewController

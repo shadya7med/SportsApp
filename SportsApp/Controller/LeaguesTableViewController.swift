@@ -14,16 +14,18 @@ import SwiftyJSON
 
 class LeaguesTableViewController: UITableViewController,LeagueVideoButtonDelegate {
     var currentSport:String = ""
-    
     var leagueIds:Array<String> = []
     var leagues:Array<League> = []
 
     let  gradientLayer = CAGradientLayer()
+    let alertView = UIAlertController(title: "League Url", message: "League url not available", preferredStyle: UIAlertController.Style.alert)
+    let alertAction = UIAlertAction(title: "Ok", style: UIAlertAction.Style.default, handler: nil)
+    
     
     
    override func viewDidLayoutSubviews() {
         
-        
+        alertView.addAction(alertAction)
         
         if gradientLayer.superlayer != nil {
             gradientLayer.removeFromSuperlayer()
@@ -33,8 +35,8 @@ class LeaguesTableViewController: UITableViewController,LeagueVideoButtonDelegat
         gradientLayer.startPoint = CGPoint(x: 0.0, y: 0.0)
         gradientLayer.endPoint = CGPoint(x: 1.0, y: 1.0)
         gradientLayer.colors = [topColor.cgColor, bottomColor.cgColor]
-        gradientLayer.frame = view.bounds
-        let backgroundView = UIView(frame: view.bounds)
+        gradientLayer.frame = CGRect(x: 0, y: 0, width: tableView.bounds.width, height: tableView.bounds.height*2)
+        let backgroundView = UIView(frame: CGRect(x: 0, y: 0, width: tableView.bounds.width, height: tableView.bounds.height*2))
         backgroundView.layer.insertSublayer(gradientLayer, at: 0)
         self.tableView.backgroundView = backgroundView
         
@@ -43,7 +45,8 @@ class LeaguesTableViewController: UITableViewController,LeagueVideoButtonDelegat
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        print(currentSport)
+        view.translatesAutoresizingMaskIntoConstraints = false
+        
         // Uncomment the following line to preserve selection between presentations
         // self.clearsSelectionOnViewWillAppear = false
 
@@ -77,7 +80,7 @@ class LeaguesTableViewController: UITableViewController,LeagueVideoButtonDelegat
                 print(error)
             }
         }
-        print(leagueIds.count)
+
         //get league Details by ID
         
    
@@ -120,14 +123,11 @@ class LeaguesTableViewController: UITableViewController,LeagueVideoButtonDelegat
                 self.leagues.append(League(leagueId : temp,leagueName: name!, leagueBadge: badge!, leagueLink: link!))
                 cell.leagueNameLabel.text = name
                 //check if there's a link
-                if link != ""
-                {
-                    cell.link = link
-                    cell.linkDelegate = self
-                }else{
-                    //hide the button if there's no link
-                    cell.leagueVideoBtn.isHidden = true
-                }
+                cell.link = link
+                cell.linkDelegate = self
+        
+
+               
                 
                 
                 
@@ -151,24 +151,29 @@ class LeaguesTableViewController: UITableViewController,LeagueVideoButtonDelegat
         
         
         cell.leagueVideoBtn.layer.cornerRadius = 15
-        cell.leagueVideoBtn.layer.borderWidth = 1
-        cell.leagueVideoBtn.layer.borderColor = UIColor.black.cgColor
+
         
         // Configure the cell...
     
         return cell
     }
     override func tableView(_ tableView: UITableView, estimatedHeightForRowAt indexPath: IndexPath) -> CGFloat {
-        return 185
+        return tableView.frame.height/4
     }
     override func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
-        return 185
+        return tableView.frame.height/4
     }
     
     
     override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         let svc = self.storyboard?.instantiateViewController(identifier: "SecondVC") as! LeagueTableViewController
         svc.id = leagueIds[indexPath.row]
+        let league = leagues.filter { (League) -> Bool in
+            return League.leagueId == svc.id
+        }
+        svc.leagueName = league[0].leagueName
+        svc.leagueUrl = league[0].leagueLink
+        svc.leagueBadge = league[0].leagueBadge
         svc.modalPresentationStyle = .fullScreen
         present(svc, animated: true, completion: nil)
     }
@@ -177,12 +182,19 @@ class LeaguesTableViewController: UITableViewController,LeagueVideoButtonDelegat
     // MARK:  - cell link Delegate
     func cellButtonTapped(link: String) {
             //check if there's a url
-            if(link != nil)
+            if(link != "")
             {
                 //open the link in safari instead
                 let youtubeUrl = URL(string:"https://\(link)")!
-                UIApplication.shared.openURL(youtubeUrl)
+//                UIApplication.shared.openURL(youtubeUrl)
+                UIApplication.shared.open(youtubeUrl, options: [:], completionHandler: nil)
             }
+            else
+            {
+                print(link)
+                self.present(alertView, animated: true, completion: nil)
+            }
+
             
         
         
