@@ -52,6 +52,15 @@ class SportsCollectionViewController: UICollectionViewController,UICollectionVie
     override func viewDidLoad() {
         super.viewDidLoad()
         
+        let noConnectionAlert = UIAlertController(title: "No Connection", message: "No Internet Connection", preferredStyle:.alert)
+        noConnectionAlert.addAction(UIAlertAction(title: "OK", style: .default, handler: { (action) in
+            if #available(iOS 10.0, *) {
+                let appSettings = URL(string: UIApplication.openSettingsURLString)
+                UIApplication.shared.open(appSettings!, options: [:], completionHandler: nil)
+            
+            }}))
+        noConnectionAlert.addAction(UIAlertAction(title: "Cancel", style: .cancel, handler: nil))
+        
         // Uncomment the following line to preserve selection between presentations
         // self.clearsSelectionOnViewWillAppear = false
 
@@ -59,22 +68,43 @@ class SportsCollectionViewController: UICollectionViewController,UICollectionVie
         //self.collectionView!.register(UICollectionViewCell.self, forCellWithReuseIdentifier: reuseIdentifier)
 
         // Do any additional setup after loading the view.
-        AF.request("https://www.thesportsdb.com/api/v1/json/1/all_sports.php").validate().responseJSON { (response) in
-            switch response.result {
-            case .success(let value):
-                let json = JSON(value)
-                let sportsArr = json["sports"].arrayValue
-                for sport in sportsArr {
-                    let sportDic = sport.dictionaryValue
-                    let name = sportDic["strSport"]?.stringValue
-                    let thumb = sportDic["strSportThumb"]?.stringValue
-                    self.sports.append(Sport(sportName: name!, sportThumb: thumb!))
-                }
-                self.collectionView.reloadData()
-            case .failure(let error):
-                print(error)
-            }
+        //check for connectivity
+        NetworkReachabilityManager(host: "https://www.thesportsdb.com/api/v1/json/1/all_sports.php")?.startListening{ status in
+          switch status {
+          case .notReachable:
+            
+            self.present(noConnectionAlert, animated: true, completion: nil)
+            
+            //self.showOfflineAlert()
+          case .reachable(.cellular):
+              //
+              fallthrough
+            //self.dismissOfflineAlert()
+          case .reachable(.ethernetOrWiFi):
+            //self.dismissOfflineAlert()
+              AF.request("https://www.thesportsdb.com/api/v1/json/1/all_sports.php").validate().responseJSON { (response) in
+                  switch response.result {
+                  case .success(let value):
+                      let json = JSON(value)
+                      let sportsArr = json["sports"].arrayValue
+                      for sport in sportsArr {
+                          let sportDic = sport.dictionaryValue
+                          let name = sportDic["strSport"]?.stringValue
+                          let thumb = sportDic["strSportThumb"]?.stringValue
+                          self.sports.append(Sport(sportName: name!, sportThumb: thumb!))
+                      }
+                      self.collectionView.reloadData()
+                  case .failure(let error):
+                      print(error)
+                  }
+              }
+          case .unknown:
+            print("Unknown network state")
+          }
         }
+        
+        
+        
         
             
             
@@ -130,6 +160,25 @@ class SportsCollectionViewController: UICollectionViewController,UICollectionVie
         
         self.navigationController?.pushViewController(leaguesTVC, animated: true)
     }
+    
+    
+    /*NetworkReachabilityManager(host: "www.google.com")?.startListening{ status in
+      switch status {
+      case .notReachable:
+          //retreive cached data
+          print("E")
+        //self.showOfflineAlert()
+      case .reachable(.cellular):
+          //
+          print("R")
+        //self.dismissOfflineAlert()
+      case .reachable(.ethernetOrWiFi):
+        //self.dismissOfflineAlert()
+          print("N")
+      case .unknown:
+        print("Unknown network state")
+      }
+    }*/
     
     /*func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAtindexPath: IndexPath) -> CGSize {
 

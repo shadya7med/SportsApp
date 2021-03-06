@@ -9,7 +9,7 @@
 import UIKit
 import SDWebImage
 import CoreData
-
+import Alamofire
 class FavouriteLeaguesTableViewController: UITableViewController ,LeagueVideoButtonDelegate{
 
     var leagues = Array<Leagues>()
@@ -18,9 +18,9 @@ class FavouriteLeaguesTableViewController: UITableViewController ,LeagueVideoBut
     let  gradientLayer = CAGradientLayer()
     let alertView = UIAlertController(title: "League Url", message: "League url not available", preferredStyle: UIAlertController.Style.alert)
     let alertAction = UIAlertAction(title: "Ok", style: UIAlertAction.Style.default, handler: nil)
-     
+    let noConnectionAlert = UIAlertController(title: "No Connection", message: "No Internt Connection", preferredStyle: .alert)
+    
     override func viewDidLayoutSubviews() {
-         
          alertView.addAction(alertAction)
          
          if gradientLayer.superlayer != nil {
@@ -40,6 +40,14 @@ class FavouriteLeaguesTableViewController: UITableViewController ,LeagueVideoBut
      }
     
     override func viewWillAppear(_ animated: Bool) {
+        noConnectionAlert.addAction(UIAlertAction(title: "Ok", style: .default, handler: { (action) in
+            if #available(iOS 10.0, *) {
+                let appSettings = URL(string: UIApplication.openSettingsURLString)
+                UIApplication.shared.open(appSettings!, options: [:], completionHandler: nil)
+            
+            }
+        }))
+        noConnectionAlert.addAction(UIAlertAction(title: "Cancel", style: .cancel, handler: nil))
         leagues = coreData.fetchfromCoreData()
         tableView.reloadData()
 //        let appDelegate = UIApplication.shared.delegate as! AppDelegate
@@ -94,16 +102,32 @@ class FavouriteLeaguesTableViewController: UITableViewController ,LeagueVideoBut
         return cell
     }
     override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-        let svc = self.storyboard?.instantiateViewController(identifier: "SecondVC") as! LeagueTableViewController
-        svc.id = leagues[indexPath.row].id!
-        let league = leagues.filter { (League) -> Bool in
-            return League.id == svc.id
+        
+        //check for connectivity
+        NetworkReachabilityManager(host:"https://www.thesportsdb.com/api/v1/json/1/all_sports.php")?.startListening{ status in
+        switch status {
+        case .notReachable:
+          
+            self.present(self.noConnectionAlert, animated: true, completion: nil)
+
+        case .reachable(.cellular):
+            fallthrough
+        case .reachable(.ethernetOrWiFi):
+            let svc = self.storyboard?.instantiateViewController(identifier: "SecondVC") as! LeagueTableViewController
+            svc.id = self.leagues[indexPath.row].id!
+            let league = self.leagues.filter { (League) -> Bool in
+                return League.id == svc.id
+            }
+            svc.leagueName = league[0].leagueName
+            svc.leagueUrl = league[0].leagueYTUrl
+            svc.leagueBadge = league[0].leagueBadge
+            svc.modalPresentationStyle = .fullScreen
+            self.present(svc, animated: true, completion: nil)
+        case .unknown:
+            print("unknown netowrk state")
+            }
         }
-        svc.leagueName = league[0].leagueName
-        svc.leagueUrl = league[0].leagueYTUrl
-        svc.leagueBadge = league[0].leagueBadge
-        svc.modalPresentationStyle = .fullScreen
-        present(svc, animated: true, completion: nil)
+        
     }
 
     /*
